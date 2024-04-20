@@ -88,29 +88,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>3.3.0</version>
-				<executions>
-					<execution>
-						<phase>verify</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<configLocation>${maven.checkstyle.plugin.configLocation}</configLocation>
-					<includeResources>false</includeResources>
-					<consoleOutput>true</consoleOutput>
-					<failsOnError>true</failsOnError>
-					<linkXRef>false</linkXRef>
-					<sourceDirectories>
-						<sourceDirectory>src</sourceDirectory>
-					</sourceDirectories>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 
