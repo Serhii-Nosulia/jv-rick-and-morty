@@ -9,18 +9,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApiConfig {
     @Bean
-    Random buildRandom() {
+    public Random buildRandom() {
         return new Random();
     }
 
     @Bean
-    ObjectMapper buildObjectMapper() {
+    public ObjectMapper buildObjectMapper() {
 
         return new ObjectMapper();
     }
 
     @Bean
-    HttpClient buildHttpClient() {
+    public HttpClient buildHttpClient() {
         return HttpClient.newHttpClient();
     }
 }
