@@ -5,10 +5,13 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import mate.academy.rickandmorty.dto.external.CharacterResponseDataDto;
 import mate.academy.rickandmorty.mapper.CharacterMapper;
+import mate.academy.rickandmorty.model.Character;
 import mate.academy.rickandmorty.repository.CharacterRepository;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +25,7 @@ public class RickAndMortyClient {
     private final ObjectMapper objectMapper;
     private final HttpClient httpClient;
 
+    @PostConstruct
     public void loadDataToDb() {
         String page = URI_BASE;
         while (page != null) {
@@ -37,9 +41,10 @@ public class RickAndMortyClient {
                 CharacterResponseDataDto characterResponseDataDto = objectMapper.readValue(
                         response.body(),
                         CharacterResponseDataDto.class);
-                characterResponseDataDto.results().stream()
+                List<Character> characterList = characterResponseDataDto.results().stream()
                         .map(characterMapper::toCharacter)
-                        .forEach(characterRepository::save);
+                        .toList();
+                characterRepository.saveAll(characterList);
                 page = characterResponseDataDto.info().next();
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException("Can't get data from API", e);
